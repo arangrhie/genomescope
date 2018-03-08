@@ -39,6 +39,8 @@ COLOR_KMERPEAK = "black"
 COLOR_RESIDUAL = "purple"
 COLOR_COVTHRES = "red"
 
+main_title="A. thaliana"
+
 ## Given mean +/- stderr, report min and max value within 2 SE
 ###############################################################################
 
@@ -327,7 +329,7 @@ report_results<-function(kmer_hist,kmer_hist_orig, k, container, foldername)
     
     ## Plot the distribution, and hopefully with the model fit
 	png(paste(foldername, "/plot.png", sep=""),width=plot_size,height=plot_size, res=resolution)
-	plot(kmer_hist_orig, type="n", main="GenomeScope Profile\n", xlab="Coverage", ylab="Frequency", ylim=c(0,y_limit), xlim=c(0,x_limit),cex.lab=font_size, cex.axis=font_size, cex.main=font_size, cex.sub=font_size)
+	plot(kmer_hist_orig, type="n", main=paste(main_title, "\n"), xlab="Coverage", ylab="Frequency", ylim=c(0,y_limit), xlim=c(0,x_limit),cex.lab=font_size, cex.axis=font_size, cex.main=font_size, cex.sub=font_size)
     rect(0, 0, max(kmer_hist_orig[[1]])*1.1 , max(kmer_hist_orig[[2]])*1.1, col=COLOR_BGCOLOR)
     points(kmer_hist_orig, type="h", col=COLOR_HIST, lwd=2)
     ## if(length(kmer_hist[,1])!=length(kmer_hist_orig[,1])){
@@ -589,8 +591,9 @@ report_results<-function(kmer_hist,kmer_hist_orig, k, container, foldername)
 
 args<-commandArgs(TRUE)
 
-if(length(args) < 4) {
-	cat("USAGE: genomescope.R histogram_file k-mer_length read_length output_dir [kmer_max] [verbose]\n")
+if(length(args) < 6) {
+  cat("USAGE: genomescope.R histogram_file k-mer_length read_length foldername title color-idx [kmer_max] [verbose]\n")
+  cat("\tSuggestive color-idx: numeric, 1 ~ 9. This will use the color of brewer.pal Set1. \n")
 } else{
 
     ## Load the arguments from the user
@@ -598,14 +601,18 @@ if(length(args) < 4) {
 	k          <- as.numeric(args[[2]])
 	readlength <- as.numeric(args[[3]])
 	foldername <- args[[4]] 
+	main_title <- args[[5]]
 
-    maxCovGenomeLen = -1
+	maxCovGenomeLen = -1
 
-    if ((length(args) >= 5)) {
-        maxCovGenomeLen = as.numeric(args[[5]])
+	col_brw_set1 = c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999")
+	COLOR_HIST = col_brw_set1[as.numeric(args[[6]])]
+	
+    if ((length(args) >= 7)) {
+        maxCovGenomeLen = as.numeric(args[[7]])
     }
 
-    if ((length(args) == 6) && (as.numeric(args[[6]] == 1))) { VERBOSE = 1 }
+    if ((length(args) == 8) && (as.numeric(args[[8]] == 1))) { VERBOSE = 1 }
 
     ## values for testing
     #histfile <- "~/build/genomescope/simulation/simulation_results/Arabidopsis_thaliana.TAIR10.26.dna_sm.toplevel.fa_het0.01_br1_rl100_cov100_err0.01_reads.fa21.hist"
