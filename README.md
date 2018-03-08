@@ -30,7 +30,7 @@ http://genomescope.org/
 
 Command line users can run the modeling with the R script genomescope.R, making sure that Rscript is in your PATH (alternatively, edit the shebang line to point to the Rscript location)
 
-    $ Rscript genomescope.R histogram_file k-mer_length read_length output_dir [kmer_max] [verbose]
+    $ Rscript genomescope.R histogram_file k-mer_length read_length output_dir title color-idx [kmer_max] [verbose]
 
 The histogram_file (from jellyfish), k-mer_length, read_length, and output_dir are required parameters. The optional parameter kmer_max specifies the cutoff for excluding high frequency kmers from the analysis. We recommend setting kmer_max=1000, but it depends on the specific characteristics of your data. If the optional parameter verbose is set to 1, then GenomeScope will output more details on the model fitting as different parameters are used. The output plots and a text file of the inferred genome characteristics will be output to the specified output_dir directory.
 
