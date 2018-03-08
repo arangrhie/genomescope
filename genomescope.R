@@ -30,8 +30,8 @@ VERBOSE = 0
 options(warn=-1)
 
 ## Colors for plots
-COLOR_BGCOLOR  = "light grey"
-COLOR_HIST     = "#56B4E9"
+COLOR_BGCOLOR  = "white"
+#COLOR_HIST     = "#56B4E9"
 COLOR_4PEAK    = "black"
 COLOR_2PEAK    = "#F0E442"
 COLOR_ERRORS   = "#D55E00"
